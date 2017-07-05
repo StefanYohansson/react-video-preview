@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <title>VideoPreview Basic Example</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="author" content="Stefan Yohansson">
+    <meta name="description" content="video preview example project">
+    <meta name="keywords" content="videopreview,webrtc,javascript">
+  </head>
+
+  <body>
+    <div id="root"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react-dom.min.js"></script>
+    <script src="../../dist/react-video-preview.js"></script>
+
+    <script>
+      function loadVideo() {
+        ReactDOM.render(
+          React.createElement(VideoPreview.VideoPreview, { videoId: 'webcam-preview', audio: true, width: 500, height: 500}, null),
+          document.getElementById('root'));
+      }
+
+      loadVideo();
+    </script>
+  </body>
+</html>

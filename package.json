@@ -1,0 +1,33 @@
+{
+  "name": "react-video-preview",
+  "version": "1.0.0",
+  "description": "Little video preview using webRTC",
+  "main": "dist/video-preview.min.js",
+  "scripts": {
+    "build": "webpack --config webpack.dist.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "videopreview",
+    "webrtc"
+  ],
+  "author": "Stefan Yohansson <snotr@sadfeelings.me>",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^0.14.0 || ^15.0.0",
+    "react-dom": "^0.14.0 || ^15.0.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.25.0",
+    "babel-loader": "^7.1.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-3": "^6.24.1",
+    "uglifyjs-webpack-plugin": "^0.4.6",
+    "webpack": "^3.0.0"
+  },
+  "dependencies": {
+    "prop-types": "^15.5.10"
+  }
+}
