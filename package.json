@@ -1,6 +1,6 @@
 {
   "name": "react-video-preview",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Little video preview using webRTC",
   "main": "dist/video-preview.min.js",
   "scripts": {
