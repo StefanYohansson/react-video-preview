@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 navigator.getMedia = navigator.getUserMedia;
+const defaultVideoId = "webcam-preview";
 
 export function Preview(WrappedComponent) {
   return class extends Component {
@@ -34,7 +35,7 @@ export function Preview(WrappedComponent) {
         audio, options, videoId,
         selectedAudio, selectedVideo
       } = this.props;
-      const videoEl = document.getElementById(videoId);
+      const videoEl = document.getElementById(videoId || defaultVideoId);
       const streamOptions = {
         audio: audio || false,
         video: true,
@@ -120,7 +121,7 @@ Preview.PropTypes = {
 
 export const Video = props => (
   <video
-    id="webcam-preview"
+    id={defaultVideoId}
     className={props.className || "video"}
     height={props.height}
     width={props.width}
@@ -131,7 +132,7 @@ export const Video = props => (
 // @TODO: insert Volume Meter component
 export const VideoVUMeter = props => (
   <video
-    id="webcam-preview"
+    id={defaultVideoId}
     className={props.className || "video"}
     height={props.height}
     width={props.width}
