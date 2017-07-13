@@ -31,7 +31,7 @@ module.exports = {
     filename: '[name].js',
     libraryTarget: 'umd',
     library: 'VideoPreview',
-    umdNamedDefine: true,
+    publicPath: '/',
     path: path.resolve(__dirname, 'dist')
   },
 
