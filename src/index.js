@@ -12,6 +12,7 @@ export function Preview(WrappedComponent) {
       this.videoBooted = false;
       this.meterEnabled = false;
       this.stream = null;
+      this.audioContext = null;
       this.state = {
         vuMeter: 0
       };
@@ -56,25 +57,26 @@ export function Preview(WrappedComponent) {
         mirrored: true,
         options: (options || {})
       };
-      if (selectedAudio) {
+      if (selectedAudio !== 'none') {
         streamOptions['audio'] = {};
         streamOptions['audio']['optional'] = [{ sourceId: selectedAudio }];
-      }
-      if (selectedAudio == 'none') {
+      } else {
         streamOptions['audio'] = false;
       }
-      
-      if (selectedVideo) {
+
+      if (selectedVideo !== 'none') {
         streamOptions['video'] = {};
         streamOptions['video']['optional'] = [{ sourceId: selectedVideo }];
-      }
-      if (selectedVideo == 'none') {
+      } else {
         streamOptions['video'] = false;
       }
       navigator.getMedia(streamOptions,
         stream => {
           if (this.stream) {
             this.stopMedia(this.stream);
+          }
+          if (this.audioContext) {
+            this.audioContext.close();
           }
           this.stream = stream;
           if (audio) {
@@ -91,6 +93,7 @@ export function Preview(WrappedComponent) {
 
     attachAudioAnalyser(stream) {
       const audioContext = new AudioContext();
+      this.audioContext = audioContext;
       const analyser = audioContext.createAnalyser();
       const microphone = audioContext.createMediaStreamSource(stream);
       const javascriptNode = audioContext.createScriptProcessor(2048, 1, 1);
