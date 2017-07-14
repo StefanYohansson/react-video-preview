@@ -59,13 +59,16 @@ export function Preview(WrappedComponent) {
       if (selectedAudio) {
         streamOptions['audio'] = {};
         streamOptions['audio']['optional'] = [{ sourceId: selectedAudio }];
-      } else if (selectedAudio == 'none') {
+      }
+      if (selectedAudio == 'none') {
         streamOptions['audio'] = false;
       }
+      
       if (selectedVideo) {
         streamOptions['video'] = {};
         streamOptions['video']['optional'] = [{ sourceId: selectedVideo }];
-      } else if (selectedVideo == 'none') {
+      }
+      if (selectedVideo == 'none') {
         streamOptions['video'] = false;
       }
       navigator.getMedia(streamOptions,
