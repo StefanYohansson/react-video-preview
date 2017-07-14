@@ -28,8 +28,9 @@ export function Preview(WrappedComponent) {
     componentWillUpdate(nextProps, nextState) {
       const isSetupNeeded = (!this.meterEnabled && !this.videoBooted);
       const isNewSelectedDevices = (this.props.selectedAudio != nextProps.selectedAudio || this.props.selectedVideo != nextProps.selectedVideo);
-      if (isSetupNeeded || isNewSelectedDevices)
-        this.setupMedia();
+      const isAudioAndVideoSelected = (!!nextProps.selectedAudio || !!nextProps.selectedVideo);
+      if ((isSetupNeeded || isNewSelectedDevices) && isAudioAndVideoSelected)
+        this.setupMedia(nextProps);
     }
 
     stopMedia(stream) {
@@ -45,11 +46,12 @@ export function Preview(WrappedComponent) {
       }
     }
 
-    setupMedia() {
+    setupMedia(props = null) {
+      const gProps = props || this.props;
       const {
         audio, options, videoId,
         selectedAudio, selectedVideo
-      } = this.props;
+      } = gProps;
       const videoEl = document.getElementById(videoId || defaultVideoId);
       const streamOptions = {
         audio: audio || false,
@@ -75,9 +77,11 @@ export function Preview(WrappedComponent) {
         stream => {
           if (this.stream) {
             this.stopMedia(this.stream);
+            this.stream = null;
           }
           if (this.audioContext) {
             this.audioContext.close();
+            this.audioContext = null;
           }
           this.stream = stream;
           if (attachAudio) {
