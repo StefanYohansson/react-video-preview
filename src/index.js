@@ -11,6 +11,7 @@ export function Preview(WrappedComponent) {
 
       this.videoBooted = false;
       this.meterEnabled = false;
+      this.stream = null;
       this.state = {
         vuMeter: 0
       };
@@ -28,6 +29,19 @@ export function Preview(WrappedComponent) {
       const isNewSelectedDevices = (this.props.selectedAudio != nextProps.selectedAudio || this.props.selectedVideo != nextProps.selectedVideo);
       if (isSetupNeeded || isNewSelectedDevices)
         this.setupMedia();
+    }
+
+    stopMedia(stream) {
+      if (typeof stream == 'function') {
+        stream.stop();
+      } else {
+        if (stream.active) {
+          const tracks = stream.getTracks();
+          tracks.forEach(track => {
+            track.stop();
+          })
+        }
+      }
     }
 
     setupMedia() {
@@ -52,6 +66,10 @@ export function Preview(WrappedComponent) {
       }
       navigator.getMedia(streamOptions,
         stream => {
+          if (this.stream) {
+            this.stopMedia(this.stream);
+          }
+          this.stream = stream;
           if (audio) {
             this.attachAudioAnalyser(stream);
           }
