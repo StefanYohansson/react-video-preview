@@ -70,6 +70,7 @@ export function Preview(WrappedComponent) {
       } else {
         streamOptions['video'] = false;
       }
+      let attachAudio = audio && !!streamOptions['audio'];
       navigator.getMedia(streamOptions,
         stream => {
           if (this.stream) {
@@ -79,7 +80,7 @@ export function Preview(WrappedComponent) {
             this.audioContext.close();
           }
           this.stream = stream;
-          if (audio) {
+          if (attachAudio) {
             this.attachAudioAnalyser(stream);
           }
           this.attachVideo(videoEl, stream);
