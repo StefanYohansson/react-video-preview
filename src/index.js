@@ -43,12 +43,12 @@ export function Preview(WrappedComponent) {
         options: (options || {})
       };
       if (selectedAudio) {
-        options['audio'] = {};
-        options['audio']['optional'] = [{ sourceId: selectedAudio }];
+        streamOptions['audio'] = {};
+        streamOptions['audio']['optional'] = [{ sourceId: selectedAudio }];
       }
       if (selectedVideo) {
-        options['video'] = {};
-        options['video']['optional'] = [{ sourceId: selectedVideo }];
+        streamOptions['video'] = {};
+        streamOptions['video']['optional'] = [{ sourceId: selectedVideo }];
       }
       navigator.getMedia(streamOptions,
         stream => {
