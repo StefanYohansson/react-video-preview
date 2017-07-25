@@ -19,6 +19,7 @@ export function Preview(WrappedComponent) {
 
       this.attachAudioAnalyser = this.attachAudioAnalyser.bind(this);
       this.setupMedia = this.setupMedia.bind(this);
+      this.cleanScope = this.cleanScope.bind(this);
     }
 
     componentDidMount() {
@@ -34,12 +35,21 @@ export function Preview(WrappedComponent) {
     }
 
     componentWillUnmount() {
+      this.cleanScope();
+    }
+
+    cleanScope() {
+      if (this.stream) {
+        this.stopMedia(this.stream);
+        this.stream = null;
+      }
       if (this.audioContext) {
         this.audioContext.close();
         this.audioContext = null;
+      }
+      if (this.node) {
         this.node.disconnect();
       }
-
     }
 
     stopMedia(stream) {
@@ -84,14 +94,8 @@ export function Preview(WrappedComponent) {
       let attachAudio = audio && !!streamOptions['audio'];
       navigator.getMedia(streamOptions,
         stream => {
-          if (this.stream) {
-            this.stopMedia(this.stream);
-            this.stream = null;
-          }
-          if (this.audioContext) {
-            this.audioContext.close();
-            this.audioContext = null;
-          }
+          this.cleanScope();
+
           this.stream = stream;
           if (attachAudio) {
             this.attachAudioAnalyser(stream);
