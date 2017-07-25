@@ -33,6 +33,15 @@ export function Preview(WrappedComponent) {
         this.setupMedia(nextProps);
     }
 
+    componentWillUnmount() {
+      if (this.audioContext) {
+        this.audioContext.close();
+        this.audioContext = null;
+        this.node.disconnect();
+      }
+
+    }
+
     stopMedia(stream) {
       if (typeof stream == 'function') {
         stream.stop();
@@ -102,6 +111,7 @@ export function Preview(WrappedComponent) {
       const analyser = audioContext.createAnalyser();
       const microphone = audioContext.createMediaStreamSource(stream);
       const javascriptNode = audioContext.createScriptProcessor(2048, 1, 1);
+      this.node = javascriptNode;
 
       microphone.connect(analyser);
       analyser.connect(javascriptNode);
